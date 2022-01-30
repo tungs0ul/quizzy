@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  background-color: #eee6ce;
+}
+
+body::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb {
+  /* background: #6649b8; */
+}
+
+.options > * {
+  flex-grow: 1;
+  flex-basis: 50%;
+}
+
+.option:hover {
+  background: #2eb086;
+}
+
+.header {
+  /* text-shadow: 2px 2px #d3d2d2; */
+  background: #313552;
+  color: #2eb086;
+  -webkit-text-stroke: 1px black; /* width and color */
+  min-width: 100vw;
+  width: 100%;
+}
+
+.bubble {
+  background-color: #b8405e;
+}
+
+.thought {
+  display: flex;
+  background-color: #eee6ce;
+  padding: 20px;
+  border-radius: 30px;
+  margin: 20px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.thought:before,
+.thought:after {
+  content: "";
+  background-color: #eee6ce;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  z-index: 10;
+}
+.thought:before {
+  width: 44px;
+  height: 44px;
+  top: -12px;
+  left: 28px;
+  box-shadow: -50px 30px 0 -12px #eee6ce;
+}
+.thought:after {
+  bottom: -10px;
+  right: 26px;
+  width: 30px;
+  height: 30px;
+  box-shadow: 40px -34px 0 0 #eee6ce, -28px -6px 0 -2px #eee6ce,
+    -24px 17px 0 -6px #eee6ce, -5px 25px 0 -10px #eee6ce;
+}

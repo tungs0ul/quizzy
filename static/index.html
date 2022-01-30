@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
+    <title>Actic</title>
+  </head>
+  <body>
+    <h1>Hello all!</h1>
+    <input id="input" type="text" />
+    <button id="btn">Send</button>
+    <button id="btn2">question 1</button>
+    <button id="btn3">question 2</button>
+    <button id="btn5">question 3</button>
+    <button id="btn4">clear</button>
+    <pre id="log"></pre>
+    <!-- <script src="/main.js"></script> -->
+    <script>
+      let log = console.log;
+
+      const wsUri =
+        ((window.location.protocol == "https:" && "wss://") || "ws://") +
+        (window.location.host ? window.location.host : "localhost:8080") +
+        "/ws";
+
+      console.log(wsUri);
+      conn = new WebSocket(wsUri);
+
+      log("Connecting...");
+
+      conn.onopen = function () {
+        log("Connected.");
+      };
+
+      conn.onmessage = function (e) {
+        log("Received: " + e.data);
+        document.getElementById("log").textContent =
+          document.getElementById("log").textContent + "\n" + e.data;
+      };
+
+      conn.onclose = function () {
+        log("Disconnected.");
+        conn = null;
+      };
+
+      function send() {
+        let data = document.getElementById("input").value;
+        conn.send(JSON.stringify({ type: "answer", data: data }));
+      }
+
+      document.getElementById("btn").addEventListener("click", send);
+      document.getElementById("btn2").addEventListener("click", () => {
+        console.log("question 1");
+        conn.send(
+          JSON.stringify({
+            type: "question",
+            data: "Yes or No?",
+            options: ["Yes", "No"],
+          })
+        );
+      });
+      document.getElementById("btn3").addEventListener("click", () => {
+        console.log("question 2");
+        conn.send(
+          JSON.stringify({
+            type: "question",
+            data: "Who among the following has designed the Python programing language?",
+            options: [
+              "Larry Wall",
+              "Guido van Rossum",
+              "Joe Armstrong",
+              "Yukihiro Matsumoto",
+            ],
+          })
+        );
+      });
+      document.getElementById("btn4").addEventListener("click", () => {
+        console.log("clear");
+        conn.send(
+          JSON.stringify({
+            type: "clear",
+            data: "",
+          })
+        );
+      });
+      document.getElementById("btn5").addEventListener("click", () => {
+        console.log("clear");
+        conn.send(
+          JSON.stringify({
+            type: "question",
+            data: "",
+            options: ["Yes", "No"],
+          })
+        );
+      });
+    </script>
+  </body>
+</html>

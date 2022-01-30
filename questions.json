@@ -1,0 +1,12 @@
+[
+  {
+    "type": "question",
+    "data": "Who among the following has designed the Python programing language?",
+    "options": [
+      "Larry Wall",
+      "Guido van Rossum",
+      "Joe Armstrong",
+      "Yukihiro Matsumoto"
+    ]
+  }
+]

@@ -1,0 +1,1 @@
+cd client && npm run build && cd .. && cargo run --release --bin client
