@@ -12,7 +12,6 @@ export default function Login({ setIsAdmin }: Props) {
   const [password, setPassword] = useState("");
   const handleLogin = () => {
     Axios.post(API, { password }).then((res) => {
-      console.log(res.data);
       if (res.data === "Success") {
         setIsAdmin(true);
       } else {

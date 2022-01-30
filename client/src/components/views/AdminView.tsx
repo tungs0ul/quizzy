@@ -11,6 +11,7 @@ type Props = {
   result: Result[];
   question: any;
   setResult: React.Dispatch<React.SetStateAction<Result[]>>;
+  active: boolean;
 };
 
 const initQuestion: Question = {
@@ -24,6 +25,7 @@ export default function AdminView({
   result,
   question,
   setResult,
+  active,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [mobileView, setMobileView] = useState(false);
@@ -74,6 +76,8 @@ export default function AdminView({
           mobileView={mobileView}
           question={question}
           clearResult={clearResult}
+          sendMessage={sendMessage}
+          active={active}
         />
       </div>
     </div>

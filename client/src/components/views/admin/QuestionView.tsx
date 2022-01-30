@@ -12,7 +12,7 @@ export default function QuestionView({ addQuestions, sendQuestion }: Props) {
   const [question, setQuestion] = useState<Question>({
     type: "question",
     data: "",
-    options: [""],
+    options: ["", ""],
   });
 
   const logFile = (event: any) => {

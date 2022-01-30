@@ -72,11 +72,24 @@ function App() {
       } else if (data.type === "clear") {
         setAnswer(null);
         setNotice("The answer has been cleared!");
+        let newResult = [...result];
+        newResult.forEach((e: Result) => {
+          e.value = 0;
+        });
+        setResult(newResult);
         setInterval(() => setNotice(""), 1500);
       } else if (data.type === "reset") {
         setQuestion(initQuestion);
         setAnswer(null);
         setResult([]);
+      } else if (data.type === "stop") {
+        setActive(false);
+        setNotice("The question has been stopped!");
+        setInterval(() => setNotice(""), 1500);
+      } else if (data.type === "start") {
+        setNotice("The question has been started!");
+        setInterval(() => setNotice(""), 1500);
+        setActive(true);
       }
     }
   }, [lastMessage]);
@@ -103,6 +116,7 @@ function App() {
                 sendMessage={sendMessage}
                 setAnswer={setAnswer}
                 notice={notice}
+                active={active}
               />
             }
           />
@@ -114,6 +128,7 @@ function App() {
                 setResult={setResult}
                 result={result}
                 question={question}
+                active={active}
               />
             }
           />

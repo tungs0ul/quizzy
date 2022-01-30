@@ -13,6 +13,7 @@ type Props = {
   question: Question;
   result: Result[];
   notice: string;
+  active: boolean;
 };
 
 export default function StudentView({
@@ -22,6 +23,7 @@ export default function StudentView({
   question,
   result,
   notice,
+  active,
 }: Props) {
   const submitAnswer = useCallback(
     (index: number) => {
@@ -54,7 +56,7 @@ export default function StudentView({
           ></motion.div>
         </motion.div>
       )}
-      {answer === null ? (
+      {answer === null && active ? (
         <div className="relative">
           {question && (
             <>
@@ -92,12 +94,14 @@ export default function StudentView({
           <div className="flex justify-center text-4xl p-4 tablet:pt-12 tablet:pb-12 mobile:pt-4 mobile:pb-8 mobile:mb-8 tablet:mb-1 relative bubble">
             <p className="thought">{question?.data?.length && question.data}</p>
           </div>
-          <div className="flex justify-center text-center text-2xl">
-            Your answer is:{" "}
-            <span className="ml-2" style={{ color: COLORS[answer] }}>
-              {question?.options[answer]}
-            </span>
-          </div>
+          {answer !== null && (
+            <div className="flex justify-center text-center text-2xl">
+              Your answer is:{" "}
+              <span className="ml-2" style={{ color: COLORS[answer] }}>
+                {question?.options[answer]}
+              </span>
+            </div>
+          )}
           <div>
             <PieGraph data={result} />
           </div>

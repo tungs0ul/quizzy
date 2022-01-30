@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PieGraph from "../../graph/PieGraph";
 import { Result, Question } from "../../../App";
+import { SendMessage } from "react-use-websocket";
 
 type Props = {
   question: Question;
   result: Result[];
   mobileView: boolean;
   clearResult: () => void;
+  active: boolean;
+  sendMessage: SendMessage;
 };
 
 export default function ResultView({
@@ -14,6 +17,8 @@ export default function ResultView({
   result,
   question,
   clearResult,
+  active,
+  sendMessage,
 }: Props) {
   const [total, setTotal] = useState(0);
 
@@ -29,8 +34,57 @@ export default function ResultView({
     >
       <div className="flex justify-between text-4xl font-bold">
         <div>On Going</div>
+        {active ? (
+          <div
+            style={{ width: "30px", height: "30px" }}
+            onClick={() =>
+              sendMessage(JSON.stringify({ type: "stop", data: "" }))
+            }
+            className="text-black cursor-pointer hover:text-red-500"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="stop"
+              className="svg-inline--fa fa-stop fa-w-14"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="currentColor"
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z"
+              ></path>
+            </svg>
+          </div>
+        ) : (
+          <div
+            style={{ width: "30px", height: "30px" }}
+            className="text-black cursor-pointer hover:text-green-500"
+            onClick={() =>
+              sendMessage(JSON.stringify({ type: "start", data: "" }))
+            }
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="play"
+              className="svg-inline--fa fa-play fa-w-14"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="currentColor"
+                d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"
+              />
+            </svg>
+          </div>
+        )}
         <div
-          style={{ width: "40px", height: "40px" }}
+          style={{ width: "30px", height: "30px" }}
           className="text-black hover:text-red-500 cursor-pointer"
           onClick={clearResult}
         >
