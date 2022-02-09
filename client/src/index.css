@@ -7,21 +7,18 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  min-height: 100%;
-  background-color: #eee6ce;
-}
-
-body::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 0.25rem;
 }
 
-body::-webkit-scrollbar-track {
-  background: #1e1e24;
+*::-webkit-scrollbar-track {
+  background: transparent;
+  display: none;
 }
 
-body::-webkit-scrollbar-thumb {
-  /* background: #6649b8; */
+body {
+  min-height: 100%;
+  background-color: #eee6ce;
 }
 
 .options > * {

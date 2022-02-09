@@ -5,8 +5,8 @@ type Props = {
   setIsAdmin: any;
 };
 
-const API = window.location.protocol + "//" + window.location.host + "/admin";
-// const API = "http://localhost:8080/admin";
+// const API = window.location.protocol + "//" + window.location.host + "/admin";
+const API = "http://localhost:8080/admin";
 
 export default function Login({ setIsAdmin }: Props) {
   const [password, setPassword] = useState("");

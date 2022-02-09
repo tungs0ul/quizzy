@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
+import React, { useCallback, Suspense } from "react";
 import { SendMessage } from "react-use-websocket";
 import { COLORS } from "../../utils";
-import PieGraph from "../graph/PieGraph";
 import { motion } from "framer-motion";
-
 import { Question, Result } from "../../App";
+
+const PieGraph = React.lazy(() => import("../graph/PieGraph"));
 
 type Props = {
   answer: number | null;
@@ -27,9 +27,6 @@ export default function StudentView({
 }: Props) {
   const submitAnswer = useCallback(
     (index: number) => {
-      if (answer !== null) {
-        return;
-      }
       sendMessage(
         JSON.stringify({ type: "answer", data: JSON.stringify(index) })
       );
@@ -45,7 +42,7 @@ export default function StudentView({
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: 1, y: 20 }}
           transition={{ duration: 0.5 }}
-          className="fixed right-5 top-0 bg-gray-200 h-14 flex items-center text-center"
+          className="fixed right-5 top-0 bg-gray-200 h-14 flex items-center text-center z-50"
         >
           <div className="p-2 text-2xl">{notice}</div>
           <motion.div
@@ -63,7 +60,7 @@ export default function StudentView({
               <div className="flex justify-center text-4xl p-4 tablet:pt-12 tablet:pb-12 mobile:pt-4 mobile:pb-8 mobile:mb-8 tablet:mb-1 relative bubble">
                 <p className="thought">{question.data}</p>
               </div>
-              <div className="gap-4 flex mobile:flex-col laptop:flex-row justify-center tablet:flex-wrap p-8 options">
+              <div className="gap-4 flex flex-col mobile:flex-col laptop:flex-row justify-center tablet:flex-wrap p-8 options">
                 {question?.options &&
                   question.options.map((option: string, index: number) => (
                     <div
@@ -102,9 +99,9 @@ export default function StudentView({
               </span>
             </div>
           )}
-          <div>
+          <Suspense fallback={<div>Loading...</div>}>
             <PieGraph data={result} />
-          </div>
+          </Suspense>
         </div>
       )}
     </div>

@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import useWebSocket from "react-use-websocket";
 import useLocalStorage from "./hooks/useLocalStorage";
 import StudentView from "./components/views/StudentView";
-import AdminView from "./components/views/AdminView";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+const AdminView = React.lazy(() => import("./components/views/AdminView"));
 
-// const WSURI = "ws://localhost:8080/ws";
-const WSURI =
-  ((window.location.protocol == "https:" && "wss://") || "ws://") +
-  window.location.host +
-  "/ws";
+const WSURI = "ws://localhost:8080/ws";
+// const WSURI =
+//   ((window.location.protocol == "https:" && "wss://") || "ws://") +
+//   window.location.host +
+//   "/ws";
 
 const initQuestion = {
   msg: "question",
@@ -21,6 +21,7 @@ export type Question = {
   type: string;
   data: string;
   options: string[];
+  uuid: string;
 };
 
 export type Result = {
@@ -31,14 +32,24 @@ export type Result = {
 function App() {
   const { sendMessage, lastMessage } = useWebSocket(WSURI, {
     shouldReconnect: () => true,
-    reconnectInterval: 5000,
+    reconnectInterval: 1000,
   });
+  // const { sendMessage, lastMessage } = useWebSocket(WSURI);
   const [question, setQuestion] = useLocalStorage("question", initQuestion);
   const [answer, setAnswer] = useLocalStorage("answer", null);
   const [result, setResult] = useState<Result[]>([]);
   const [notice, setNotice] = useState("");
   const [active, setActive] = useState(false);
-  const [intervalID, setIntervalID] = useState<number | null>(null);
+  const [intervalID, setIntervalID] = useState<NodeJS.Timer | null>(null);
+
+  const interval = (text: string) => {
+    setNotice(text);
+    if (intervalID !== null) {
+      clearInterval(intervalID);
+    }
+    let id = setInterval(() => setNotice(""), 1500);
+    setIntervalID(id);
+  };
 
   useEffect(() => {
     if (lastMessage !== null) {
@@ -47,16 +58,11 @@ function App() {
       }
       const data = JSON.parse(lastMessage.data);
       if (data.type === "question") {
-        if (data.data !== question.data) {
-          setNotice("The question has been changed!");
+        if (data.uuid !== question.uuid) {
           setAnswer(null);
           setQuestion(data);
           setResult([]);
-          if (intervalID !== null) {
-            clearInterval(intervalID);
-          }
-          let id = setInterval(() => setNotice(""), 1500);
-          setIntervalID(id);
+          interval("The question has been changed!");
         }
       } else if (data.type === "result") {
         if (
@@ -71,25 +77,22 @@ function App() {
         setResult(result);
       } else if (data.type === "clear") {
         setAnswer(null);
-        setNotice("The answer has been cleared!");
         let newResult = [...result];
         newResult.forEach((e: Result) => {
           e.value = 0;
         });
         setResult(newResult);
-        setInterval(() => setNotice(""), 1500);
+        interval("The answer has been cleared!");
       } else if (data.type === "reset") {
         setQuestion(initQuestion);
         setAnswer(null);
         setResult([]);
       } else if (data.type === "stop") {
         setActive(false);
-        setNotice("The question has been stopped!");
-        setInterval(() => setNotice(""), 1500);
+        interval("The question has been stopped!");
       } else if (data.type === "start") {
-        setNotice("The question has been started!");
-        setInterval(() => setNotice(""), 1500);
         setActive(true);
+        interval("The question has been started!");
       }
     }
   }, [lastMessage]);
@@ -123,13 +126,15 @@ function App() {
           <Route
             path="/login"
             element={
-              <AdminView
-                sendMessage={sendMessage}
-                setResult={setResult}
-                result={result}
-                question={question}
-                active={active}
-              />
+              <Suspense fallback={<div>Loading...</div>}>
+                <AdminView
+                  sendMessage={sendMessage}
+                  setResult={setResult}
+                  result={result}
+                  question={question}
+                  active={active}
+                />
+              </Suspense>
             }
           />
         </Routes>

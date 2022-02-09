@@ -5,6 +5,7 @@ import { Result, Question } from "../../App";
 import Sidebar from "./admin/Sidebar";
 import QuestionView from "./admin/QuestionView";
 import Login from "./admin/Login";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   sendMessage: SendMessage;
@@ -18,6 +19,7 @@ const initQuestion: Question = {
   type: "question",
   data: "Yes or No?",
   options: ["Yes", "No"],
+  uuid: uuidv4().toString(),
 };
 
 export default function AdminView({
@@ -30,6 +32,13 @@ export default function AdminView({
   const [isOpen, setIsOpen] = useState(false);
   const [mobileView, setMobileView] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([initQuestion]);
+
+  const [newQuestion, setNewQuestion] = useState<Question>({
+    type: "question",
+    data: "",
+    options: ["", ""],
+    uuid: uuidv4().toString(),
+  });
 
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -56,21 +65,21 @@ export default function AdminView({
   }
 
   return (
-    <div className="flex justify-between relative h-full">
+    <div className="flex justify-between relative h-fit w-full ">
       <Sidebar
         questions={questions}
         sendQuestion={sendQuestion}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        setNewQuestion={setNewQuestion}
       />
-      <div
-        className="flex mobile:flex-col laptop:flex-row relative z-0"
-        style={{
-          width: "calc(100vw - 60px)",
-          overflowX: "hidden",
-        }}
-      >
-        <QuestionView addQuestions={addQuestions} sendQuestion={sendQuestion} />
+      <div className="flex mobile:flex-col laptop:flex-row z-0 w-full mobile:h-fit h-full gap-4">
+        <QuestionView
+          addQuestions={addQuestions}
+          sendQuestion={sendQuestion}
+          newQuestion={newQuestion}
+          setNewQuestion={setNewQuestion}
+        />
         <ResultView
           result={result}
           mobileView={mobileView}

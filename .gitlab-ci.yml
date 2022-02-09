@@ -1,0 +1,24 @@
+stages:
+  - react
+  - rust
+
+react:
+  stage: react
+  image: node:17-alpine
+  script:
+    - npm i -g typescript
+    - cd client
+    - npm i
+    - npm run build
+  artifacts:
+    paths:
+      - client/dist/
+
+rust:
+  stage: rust
+  image: rust:1
+  script:
+    - cargo build --release
+  artifacts:
+    paths:
+      - target/release/quizzy

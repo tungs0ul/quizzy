@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render piegraph 1`] = `
+<div
+  className="flex justify-center cursor-pointer"
+>
+  <div
+    className="recharts-wrapper"
+    style={
+      Object {
+        "cursor": "default",
+        "height": 460.8,
+        "position": "relative",
+        "width": 460.8,
+      }
+    }
+  >
+    <svg
+      className="recharts-surface"
+      cx="50%"
+      cy="50%"
+      height={460.8}
+      version="1.1"
+      viewBox="0 0 460.8 460.8"
+      width={460.8}
+    >
+      <defs>
+        <clipPath
+          id="recharts1-clip"
+        >
+          <rect
+            height={450.8}
+            width={450.8}
+            x={5}
+            y={5}
+          />
+        </clipPath>
+      </defs>
+      <g
+        className="recharts-layer recharts-pie"
+      >
+        <g
+          className="recharts-layer"
+        >
+          <g
+            className="recharts-layer recharts-pie-sector"
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
+          <g
+            className="recharts-layer recharts-pie-sector"
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
+        </g>
+      </g>
+    </svg>
+    <div
+      className="recharts-legend-wrapper"
+      style={
+        Object {
+          "height": "auto",
+          "left": 5,
+          "position": "absolute",
+          "top": 5,
+          "width": 450.8,
+        }
+      }
+    >
+      <ul
+        className="recharts-default-legend"
+        style={
+          Object {
+            "margin": 0,
+            "padding": 0,
+            "textAlign": "center",
+          }
+        }
+      >
+        <li
+          className="recharts-legend-item legend-item-0"
+          style={
+            Object {
+              "display": "inline-block",
+              "marginRight": 10,
+            }
+          }
+        >
+          <svg
+            className="recharts-surface"
+            height={14}
+            style={
+              Object {
+                "display": "inline-block",
+                "marginRight": 4,
+                "verticalAlign": "middle",
+              }
+            }
+            version="1.1"
+            viewBox="0 0 32 32"
+            width={14}
+          >
+            <path
+              className="recharts-legend-icon"
+              d="M0,4h32v24h-32z"
+              fill="#0088FE"
+              stroke="none"
+            />
+          </svg>
+          <span
+            className="recharts-legend-item-text"
+            style={
+              Object {
+                "color": "#0088FE",
+              }
+            }
+          >
+            1
+          </span>
+        </li>
+        <li
+          className="recharts-legend-item legend-item-1"
+          style={
+            Object {
+              "display": "inline-block",
+              "marginRight": 10,
+            }
+          }
+        >
+          <svg
+            className="recharts-surface"
+            height={14}
+            style={
+              Object {
+                "display": "inline-block",
+                "marginRight": 4,
+                "verticalAlign": "middle",
+              }
+            }
+            version="1.1"
+            viewBox="0 0 32 32"
+            width={14}
+          >
+            <path
+              className="recharts-legend-icon"
+              d="M0,4h32v24h-32z"
+              fill="#00C49F"
+              stroke="none"
+            />
+          </svg>
+          <span
+            className="recharts-legend-item-text"
+            style={
+              Object {
+                "color": "#00C49F",
+              }
+            }
+          >
+            2
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="recharts-tooltip-wrapper"
+      style={
+        Object {
+          "MozTransform": "translate(undefinedpx, undefinedpx)",
+          "OTransform": "translate(undefinedpx, undefinedpx)",
+          "WebkitTransform": "translate(undefinedpx, undefinedpx)",
+          "left": 0,
+          "msTransform": "translate(undefinedpx, undefinedpx)",
+          "pointerEvents": "none",
+          "position": "absolute",
+          "top": 0,
+          "transform": "translate(undefinedpx, undefinedpx)",
+          "visibility": "hidden",
+        }
+      }
+    >
+      <div
+        className="recharts-default-tooltip"
+        style={
+          Object {
+            "backgroundColor": "#fff",
+            "border": "1px solid #ccc",
+            "margin": 0,
+            "padding": 10,
+            "whiteSpace": "nowrap",
+          }
+        }
+      >
+        <p
+          className="recharts-tooltip-label"
+          style={
+            Object {
+              "margin": 0,
+            }
+          }
+        >
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -3,10 +3,10 @@ use rust_embed::RustEmbed;
 use serde::Deserialize;
 use serde_json::Value;
 use std::env;
-use std::net::SocketAddr;
 use std::{collections::HashMap, sync::Arc};
 use tokio::sync::{mpsc, RwLock};
 use tokio_stream::wrappers::UnboundedReceiverStream;
+use uuid::Uuid;
 use warp::ws::{Message, WebSocket};
 use warp::{http::header::HeaderValue, path::Tail, reply::Response, Filter, Rejection, Reply};
 
@@ -37,13 +37,16 @@ async fn login(
 
 #[tokio::main]
 async fn main() {
-    let addr = env::args()
-        .nth(1)
-        .unwrap_or_else(|| "0.0.0.0:8080".to_string());
+    let my_uuid = Uuid::new_v4();
+    // let addr = env::args()
+    //     .nth(1)
+    //     .unwrap_or_else(|| "0.0.0.0:8080".to_string());
 
     let secret = env::args().nth(2).unwrap_or_else(|| "admin".to_string());
 
-    let socket_address: SocketAddr = addr.parse().expect("valid socket Address");
+    let port = env::args().nth(1).unwrap_or_else(|| "8080".to_string());
+    let port: u16 = port.parse().expect("Port must be a number");
+    // let socket_address: SocketAddr = addr.parse().expect("valid socket Address");
 
     let users = Users::default();
     let users = warp::any().map(move || users.clone());
@@ -51,12 +54,12 @@ async fn main() {
     let info = Info::default();
     info.write().await.insert(
         "question".to_string(),
-        "{\"type\": \"question\", \"data\": \"Yes or No\", \"options\": [\"Yes\", \"No\"]}"
+        format!("{{\"type\": \"question\", \"data\": \"Yes or No\", \"options\": [\"Yes\", \"No\"], \"uuid\": \"{}\"}}", my_uuid)
             .to_string(),
     );
     info.write().await.insert(
         "active".to_string(),
-        "{\"type\": \"stop\", \"data\": \"\"}".to_string(),
+        "{\"type\": \"start\", \"data\": \"\"}".to_string(),
     );
     let info = warp::any().map(move || info.clone());
 
@@ -73,7 +76,7 @@ async fn main() {
         .and(info)
         .and(answers)
         .map(|ws: warp::ws::Ws, users, info, answers| {
-            ws.on_upgrade(move |socket| connect(socket, users, info, answers))
+            Ok(ws.on_upgrade(move |socket| connect(socket, users, info, answers)))
         });
 
     let index = warp::path::end().and_then(serve_index);
@@ -87,10 +90,13 @@ async fn main() {
         .and(warp::body::json())
         .and_then(login);
 
-    let routes = chat.or(index).or(dist).or(admin);
+    let others = warp::get().and(warp::path("login")).and_then(serve_index);
+    let res_404 = warp::any().map(|| warp::reply::html(HTML_404));
 
-    println!("Running on {}", socket_address);
-    warp::serve(routes).run(socket_address).await;
+    let routes = chat.or(index).or(dist).or(admin).or(others).or(res_404);
+
+    println!("Running on port {}", port);
+    warp::serve(routes).run(([0, 0, 0, 0], port)).await;
 }
 
 async fn connect(ws: WebSocket, users: Users, info: Info, answers: Answer) {
@@ -115,7 +121,10 @@ async fn connect(ws: WebSocket, users: Users, info: Info, answers: Answer) {
     users.write().await.insert(my_id, tx);
 
     while let Some(result) = user_rx.next().await {
-        let message = result.expect("Error while reading from websocket");
+        if result.is_err() {
+            break;
+        }
+        let message = result.expect("Error while reading from websocket here");
         if let Ok(_) = message.to_str() {
             let msg = message.to_str().unwrap();
             let v: Value = serde_json::from_str(msg).unwrap();
@@ -224,3 +233,14 @@ fn serve_impl(path: &str) -> Result<impl Reply, Rejection> {
     );
     Ok(res)
 }
+
+static HTML_404: &str = r#"<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Warp Chat</title>
+    </head>
+    <body>
+        <h1>404 Not Found</h1>
+    </body>
+</html>
+"#;

@@ -30,13 +30,13 @@ export default function ResultView({
   return (
     <div
       className="flex flex-col gap-8 tablet:w-screen mobile:w-screen laptop:w-1/2 p-2"
-      style={{ background: "#9AD0EC" }}
+      // style={{ background: "#9AD0EC" }}
     >
       <div className="flex justify-between text-4xl font-bold">
         <div>On Going</div>
         {active ? (
           <div
-            style={{ width: "30px", height: "30px" }}
+            style={{ width: "40px", height: "40px" }}
             onClick={() =>
               sendMessage(JSON.stringify({ type: "stop", data: "" }))
             }
@@ -45,22 +45,22 @@ export default function ResultView({
             <svg
               aria-hidden="true"
               focusable="false"
-              data-prefix="fas"
-              data-icon="stop"
-              className="svg-inline--fa fa-stop fa-w-14"
+              data-prefix="far"
+              data-icon="pause-circle"
+              className="svg-inline--fa fa-pause-circle fa-w-16"
               role="img"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
+              viewBox="0 0 512 512"
             >
               <path
                 fill="currentColor"
-                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z"
+                d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm96-280v160c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16zm-112 0v160c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16z"
               ></path>
             </svg>
           </div>
         ) : (
           <div
-            style={{ width: "30px", height: "30px" }}
+            style={{ width: "40px", height: "40px" }}
             className="text-black cursor-pointer hover:text-green-500"
             onClick={() =>
               sendMessage(JSON.stringify({ type: "start", data: "" }))
@@ -69,17 +69,17 @@ export default function ResultView({
             <svg
               aria-hidden="true"
               focusable="false"
-              data-prefix="fas"
-              data-icon="play"
-              className="svg-inline--fa fa-play fa-w-14"
+              data-prefix="far"
+              data-icon="play-circle"
+              className="svg-inline--fa fa-play-circle fa-w-16"
               role="img"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
+              viewBox="0 0 512 512"
             >
               <path
                 fill="currentColor"
-                d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"
-              />
+                d="M371.7 238l-176-107c-15.8-8.8-35.7 2.5-35.7 21v208c0 18.4 19.8 29.8 35.7 21l176-101c16.4-9.1 16.4-32.8 0-42zM504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256z"
+              ></path>
             </svg>
           </div>
         )}

@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render student view with notice 1`] = `
+<div>
+  <div
+    className="fixed right-5 top-0 bg-gray-200 h-14 flex items-center text-center z-50"
+    style={
+      Object {
+        "opacity": 0,
+        "transform": "translateY(-100px) translateZ(0)",
+      }
+    }
+  >
+    <div
+      className="p-2 text-2xl"
+    >
+      hello
+    </div>
+    <div
+      className="bg-blue-600 w-full absolute bottom-0 h-2"
+      style={
+        Object {
+          "width": "0px",
+        }
+      }
+    />
+  </div>
+  <div
+    className="relative"
+  >
+    <div
+      className="flex justify-center text-4xl p-4 tablet:pt-12 tablet:pb-12 mobile:pt-4 mobile:pb-8 mobile:mb-8 tablet:mb-1 relative bubble"
+    >
+      <p
+        className="thought"
+      >
+        Yes Or No
+      </p>
+    </div>
+    <div
+      className="gap-4 flex flex-col mobile:flex-col laptop:flex-row justify-center tablet:flex-wrap p-8 options"
+    >
+      <div
+        className="flex justify-center"
+      >
+        <span
+          className="border-2 border-black mobile:p-4 tablet:p-12 mobile:w-full flex justify-center rounded-md mobile:text-3xl tablet:text-4xl cursor-pointer option"
+          onClick={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+              "width": "0px",
+            }
+          }
+        >
+          Yes
+        </span>
+      </div>
+      <div
+        className="flex justify-center"
+      >
+        <span
+          className="border-2 border-black mobile:p-4 tablet:p-12 mobile:w-full flex justify-center rounded-md mobile:text-3xl tablet:text-4xl cursor-pointer option"
+          onClick={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+              "width": "0px",
+            }
+          }
+        >
+          No
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render student view without notice 1`] = `
+<div>
+  
+  <div
+    className="relative"
+  >
+    <div
+      className="flex justify-center text-4xl p-4 tablet:pt-12 tablet:pb-12 mobile:pt-4 mobile:pb-8 mobile:mb-8 tablet:mb-1 relative bubble"
+    >
+      <p
+        className="thought"
+      >
+        Yes Or No
+      </p>
+    </div>
+    <div
+      className="gap-4 flex flex-col mobile:flex-col laptop:flex-row justify-center tablet:flex-wrap p-8 options"
+    >
+      <div
+        className="flex justify-center"
+      >
+        <span
+          className="border-2 border-black mobile:p-4 tablet:p-12 mobile:w-full flex justify-center rounded-md mobile:text-3xl tablet:text-4xl cursor-pointer option"
+          onClick={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+              "width": "0px",
+            }
+          }
+        >
+          Yes
+        </span>
+      </div>
+      <div
+        className="flex justify-center"
+      >
+        <span
+          className="border-2 border-black mobile:p-4 tablet:p-12 mobile:w-full flex justify-center rounded-md mobile:text-3xl tablet:text-4xl cursor-pointer option"
+          onClick={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+              "width": "0px",
+            }
+          }
+        >
+          No
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

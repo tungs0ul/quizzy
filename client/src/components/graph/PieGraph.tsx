@@ -43,13 +43,13 @@ type Props = {
 export default function PieGraph({ data, resize }: Props) {
   const [width, setWidth] = useState(
     resize
-      ? Math.min(window.innerWidth / 2, window.innerHeight) * 0.75
-      : Math.min(window.innerWidth, window.innerHeight) * 0.75
+      ? Math.min(window.innerWidth / 2, window.innerHeight) * 0.9
+      : Math.min(window.innerWidth, window.innerHeight) * 0.9
   );
 
   useEffect(() => {
     const handleResize = () => {
-      let size = Math.min(window.innerWidth, window.innerHeight) * 0.75;
+      let size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
       if (resize) {
         size = size * 0.5;
       }

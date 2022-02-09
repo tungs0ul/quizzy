@@ -8,5 +8,30 @@
       "Joe Armstrong",
       "Yukihiro Matsumoto"
     ]
+  },
+  {
+    "type": "question",
+    "data": "Which of the following is the binary representation of 4 5/8?",
+    "options": ["110.101", "100.101", "10.011", "100.11"]
+  },
+  {
+    "type": "question",
+    "data": "A segment of a track in a mass storage system",
+    "options": ["Pixel", "Address", "Sector", "Flip-flop"]
+  },
+  {
+    "type": "question",
+    "data": "A numeric value used to identify a memory cell",
+    "options": ["Hexadecimal notation", "Boolean operation", "Bit", "Address"]
+  },
+  {
+    "type": "question",
+    "data": "A means of encoding text in which each symbol is represented by 16 bits",
+    "options": ["ISO", "ASCII", "Unicode", "LZW"]
+  },
+  {
+    "type": "question",
+    "data": "Which of the following storage systems is best suited for storing and retrieving long strings of data that are processed in their sequential order?",
+    "options": ["Magnetic disk", "Main memory", "Optical CDs and DVDs"]
   }
 ]

@@ -1,24 +1,31 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { Question } from "../../../App";
 import { motion } from "framer-motion";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   addQuestions: (questions: Question[]) => void;
   sendQuestion: (question: Question) => void;
+  setNewQuestion: React.Dispatch<React.SetStateAction<Question>>;
+  newQuestion: Question;
 };
 
-export default function QuestionView({ addQuestions, sendQuestion }: Props) {
+export default function QuestionView({
+  addQuestions,
+  sendQuestion,
+  newQuestion,
+  setNewQuestion,
+}: Props) {
   const inputRef = useRef<null | HTMLInputElement>(null);
-  const [question, setQuestion] = useState<Question>({
-    type: "question",
-    data: "",
-    options: ["", ""],
-  });
 
   const logFile = (event: any) => {
     let str = event.target.result;
     let json = JSON.parse(str);
-    addQuestions(json);
+    let newQuestions: Question[] = [];
+    json.forEach((e: any) => {
+      newQuestions.push({ ...e, uuid: uuidv4().toString() });
+    });
+    addQuestions(newQuestions);
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,17 +77,17 @@ export default function QuestionView({ addQuestions, sendQuestion }: Props) {
         <textarea
           rows={5}
           className="border-2 rounded-md w-full text-2xl p-4"
-          value={question.data}
+          value={newQuestion.data}
           onChange={(e) => {
-            let newQuestion = { ...question };
-            newQuestion.data = e.target.value;
-            setQuestion(newQuestion);
+            let question = { ...newQuestion };
+            question.data = e.target.value;
+            setNewQuestion(question);
           }}
         />
       </div>
       <div className="flex flex-col gap-4">
         <div className="w-1/3 h-16 text-2xl items-center flex">Options:</div>
-        {question.options.map((e, i) => (
+        {newQuestion.options.map((e, i) => (
           <div className="flex" key={i}>
             <motion.input
               initial={{ x: -300 }}
@@ -88,18 +95,18 @@ export default function QuestionView({ addQuestions, sendQuestion }: Props) {
               className="border-2 rounded-md w-full h-16 text-2xl pl-4 pr-4"
               value={e}
               onChange={(e) => {
-                let newQuestion = { ...question };
-                newQuestion.options[i] = e.target.value;
-                setQuestion(newQuestion);
+                let question = { ...newQuestion };
+                question.options[i] = e.target.value;
+                setNewQuestion(question);
               }}
             />
             <div
               style={{ width: "40px" }}
               className="items-center flex ml-4 text-black hover:text-red-400 cursor-pointer"
               onClick={() => {
-                let newQuestion = { ...question };
-                newQuestion.options.splice(i, 1);
-                setQuestion(newQuestion);
+                let question = { ...newQuestion };
+                question.options.splice(i, 1);
+                setNewQuestion(question);
               }}
             >
               <svg
@@ -124,9 +131,9 @@ export default function QuestionView({ addQuestions, sendQuestion }: Props) {
           <div style={{ width: "40px", height: "40px" }}>
             <svg
               onClick={() => {
-                setQuestion({
-                  ...question,
-                  options: [...question.options, ""],
+                setNewQuestion({
+                  ...newQuestion,
+                  options: [...newQuestion.options, ""],
                 });
               }}
               aria-hidden="true"
@@ -150,13 +157,19 @@ export default function QuestionView({ addQuestions, sendQuestion }: Props) {
         <div
           className="text-3xl border-4 border-black p-8 rounded-lg text-white font-bold cursor-pointer hover:bg-neutral-800 bg-red-800"
           onClick={() => {
-            let q = { ...question };
+            let q = { ...newQuestion };
             q.options = q.options.filter((e) => e);
             if (q.options.length < 2) {
               alert("Please add atleast two options");
               return;
             }
             sendQuestion(q);
+            setNewQuestion({
+              type: "question",
+              data: "",
+              options: ["", ""],
+              uuid: uuidv4().toString(),
+            });
           }}
         >
           START QUESTION

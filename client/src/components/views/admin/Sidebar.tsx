@@ -7,6 +7,7 @@ type Props = {
   questions: Question[];
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   sendQuestion: (question: Question) => void;
+  setNewQuestion: React.Dispatch<React.SetStateAction<Question>>;
 };
 
 export default function Sidebar({
@@ -14,19 +15,25 @@ export default function Sidebar({
   sendQuestion,
   setIsOpen,
   questions,
+  setNewQuestion,
 }: Props) {
   return (
     <motion.div
-      className={`flex overflow-y-auto sticky top-0 z-20`}
-      style={{ background: "#323232", minWidth: isOpen ? 400 : 55 }}
+      className={`flex overflow-y-auto fixed z-50 pb-4 justify-around ${
+        isOpen ? "" : "rounded-r-md"
+      }`}
+      style={{
+        background: "#323232",
+        maxHeight: "calc(100vh - 120px)",
+        overflowY: "auto",
+      }}
       animate={{
-        width: isOpen ? "400px" : "55px",
+        width: isOpen ? "min(100vw, 400px)" : "55px",
       }}
     >
       <motion.div
         className="cursor-pointer text-white hover:text-lime-300 relative z-30"
         animate={{
-          x: isOpen ? 350 : 0,
           rotate: isOpen ? 180 : 0,
         }}
         style={{ width: 50, height: 50 }}
@@ -58,7 +65,7 @@ export default function Sidebar({
           </g>
         </svg>
       </motion.div>
-      <div className="mt-16 text-white text-2xl flex flex-col gap-2">
+      <div className="mt-16 w-72 text-white text-2xl flex flex-col gap-2">
         {isOpen &&
           questions.map((e, i) => (
             <div key={i} className="flex gap-2">
@@ -67,7 +74,8 @@ export default function Sidebar({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 style={{ marginLeft: "-40px", marginRight: "5px" }}
-                className="p-4 border-2 w-80 cursor-pointer hover:text-yellow-400 overflow-hidden text-ellipsis whitespace-nowrap rounded-md"
+                className="p-4 border-2 w-full cursor-pointer hover:text-yellow-400 overflow-hidden text-ellipsis whitespace-nowrap rounded-md"
+                onClick={() => setNewQuestion(e)}
               >
                 {e.data}
               </motion.div>
